@@ -12,13 +12,13 @@ We propose HSMix, a novel approach to local image editing data augmentation invo
 Our method fully exploits both the prior contour and saliency information, thus preserving local semantic information in the augmented images while enriching the augmentation space with more diversity. Our method is a plug-and-play solution that is model agnostic and applicable to a range of medical imaging modalities.
 
 
-We utilize the combinatin of hard mixing and soft mixing.
+We utilize the combination of hard mixing and soft mixing.
 
 The Hard Mixing can be illustrated in  the following figure.
 
-![image](https://github.com/DanielaPlusPlus/DataAug4Medical/blob/main/framework.png)
+![image](https://github.com/DanielaPlusPlus/HSMix/blob/main/Hard_Mixing.png)
 
 
 The Soft Mixing can be illustrated in  the following figure.
 
-![image](https://github.com/DanielaPlusPlus/DataAug4Medical/blob/main/framework.png)
+![image](https://github.com/DanielaPlusPlus/HSMix/blob/main/Soft_Mixing.png)
