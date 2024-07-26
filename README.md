@@ -22,3 +22,8 @@ The Hard Mixing can be illustrated in  the following figure.
 The Soft Mixing can be illustrated in  the following figure.
 
 ![image](https://github.com/DanielaPlusPlus/HSMix/blob/main/Soft_Mixing.png)
+
+
+The details of the related models and datasets can be found in 
+
+https://github.com/DanielaPlusPlus/DataAug4Medical
