@@ -119,7 +119,7 @@ def main():
                     input = input.cuda()
                     #target = target.cuda()
                     output = model(input)
-                    output = F.sigmoid(output)
+                    # output = F.sigmoid(output)
                     # # compute output
                     # if args.deepsupervision:
                     #     output = model(input)[-1]
