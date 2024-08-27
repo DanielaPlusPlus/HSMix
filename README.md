@@ -16,12 +16,12 @@ We utilize the combination of hard mixing and soft mixing.
 
 The Hard Mixing can be illustrated in  the following figure.
 
-![image](https://github.com/DanielaPlusPlus/HSMix/blob/main/Hard_Mixing.png)
+![image](https://github.com/DanielaPlusPlus/HSMix/blob/main/Hard_mixing.png)
 
 
 The Soft Mixing can be illustrated in  the following figure.
 
-![image](https://github.com/DanielaPlusPlus/HSMix/blob/main/Soft_Mixing.png)
+![image](https://github.com/DanielaPlusPlus/HSMix/blob/main/Soft_mixing.png)
 
 
 The details of the related models and datasets can be found in 
