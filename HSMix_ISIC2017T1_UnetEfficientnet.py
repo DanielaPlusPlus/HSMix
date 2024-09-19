@@ -1,6 +1,3 @@
-"""
-mixup based on superpixels
-"""
 
 import warnings
 warnings.filterwarnings('ignore')
@@ -84,13 +81,13 @@ def get_argparser():
     parser.add_argument("--LR", type=float, default=0.0001,
                         help="learning rate (default: 0.001)")
     parser.add_argument("--step_size", type=int, default=10000)
-    parser.add_argument("--crop_val", action='store_true', default=True, #修改！！！
+    parser.add_argument("--crop_val", action='store_true', default=True, 
                         help='crop validation (default: False)')
     parser.add_argument("--batch_size", type=int, default=8,
                         help='batch size (default: 4)')
     parser.add_argument("--val_batch_size", type=int, default=8,
                         help='batch size for validation (default: 4)')
-    parser.add_argument("--img_size", type=int, default=224) #修改！！！
+    parser.add_argument("--img_size", type=int, default=224)
 
     parser.add_argument("--loss_type", type=str, default='BCE',
                         choices=['cross_entropy', 'focal_loss', 'BCE'], help="loss type (default: False)")
@@ -111,7 +108,7 @@ def get_argparser():
 
 
 def rand_bnl(size, p_binom=0.5):
-    brl = stats.bernoulli.rvs(p_binom, size=size, random_state=None)  # random_state=None指每次生成随机
+    brl = stats.bernoulli.rvs(p_binom, size=size, random_state=None) 
     (zero_idx,) = np.where(brl == int(1))
     return zero_idx
 
@@ -147,7 +144,7 @@ def SuperpixelMixup_Saliency_LambdaMask(images, labels, N_superpixels_mim, N_sup
             for v in range(SuperP_map_b_value.shape[0]):
                 if v in sel_region_idx_cutmix:
                     bool_v = (SuperP_map_b == SuperP_map_b_value[v])
-                    binary_mask_sp_cutmix[bool_v == True] = 1  # mix处mask是1, 否则是0
+                    binary_mask_sp_cutmix[bool_v == True] = 1  
                 else:
                     pass
             labels_sp_cutmix = lb_a[sp] * (1 - binary_mask_sp_cutmix) + lb_b[sp] * binary_mask_sp_cutmix
@@ -186,7 +183,7 @@ def SuperpixelMixup_Saliency_LambdaMask(images, labels, N_superpixels_mim, N_sup
             for v in range(nb_SuperP_ab):
                 binary_mask_4saliency = np.zeros((W, H))
                 bool_v = (SuperP_map_ab == SuperP_map_ab_value[v])
-                binary_mask_4saliency[bool_v == True] = 1  # mix处mask是1, 否则是0
+                binary_mask_4saliency[bool_v == True] = 1  
                 saliency_map_v = SaliencyMap_ab * binary_mask_4saliency
                 saliency_map_v = torch.tensor(saliency_map_v)
                 saliency_value_v = saliency_map_v.mean(dim=[-1, -2],keepdim=True)  # sum up the saliency value of every pixel in a SuperP
@@ -208,8 +205,6 @@ def SuperpixelMixup_Saliency_LambdaMask(images, labels, N_superpixels_mim, N_sup
             lam_mixup_mask_sp = np.zeros((W, H), dtype=np.float32) # for image and mask mixup
             for v in range(SuperP_map_ab_value.shape[0]):
                 bool_v = (SuperP_map_ab == SuperP_map_ab_value[v])
-                # binary_mask_sp_mixup[bool_v == True] = 1  # mix处mask是1, 否则是0
-                # lam = np.random.beta(Beta_mixup, Beta_mixup)
                 lam_mixup_mask_sp[bool_v == True] = saliency_value_ab_4superpixel[v]
 
             lam_mixup_mask_sp = torch.tensor(lam_mixup_mask_sp)
