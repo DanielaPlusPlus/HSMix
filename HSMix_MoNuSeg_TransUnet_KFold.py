@@ -1,10 +1,3 @@
-"""
-对k=0,1,2,3层随机选择一层进行cutout, 当k=0时, cutout在input space, 否则在hidden space.
-cutout时候的grid 来自于对superpixel根据feature的大小进行的缩放及随机选择
-label不变
-总共3个loss, Segmentaion loss; Inpainting Loss with binary mask; Dice Loss
-# cutout时候的对应生成图像尺寸大小的label, 该label map中在对应位置进行了cutout, 由实际cutout时候的binary mask(feature大小)放大得到
-"""
 
 import warnings
 warnings.filterwarnings('ignore')
@@ -86,13 +79,12 @@ def get_argparser():
                         help="learning rate (default: 0.01)")
     parser.add_argument("--lr_policy", type=str, default='poly', choices=['poly', 'step'],
                         help="learning rate scheduler policy")
-    parser.add_argument("--crop_val", action='store_true', default=True, #修改！！！
-                        help='crop validation (default: False)')
+    parser.add_argument("--crop_val", action='store_true', default=True, 
     parser.add_argument("--batch_size", type=int, default=4,
                         help='batch size (default: 4)')
     parser.add_argument("--val_batch_size", type=int, default=4,
                         help='batch size for validation (default: 4)')
-    parser.add_argument("--img_size", type=int, default=224) #修改！！！
+    parser.add_argument("--img_size", type=int, default=224)
     parser.add_argument("--kfold", type=int, default=5)
 
     parser.add_argument("--loss_type", type=str, default='BCE',
@@ -148,7 +140,6 @@ def SuperpixelMixup_LambdaMask(images, labels, N_superpixels_mim, N_superpixels_
         lam_mixup_mask_sp = np.zeros((W, H), dtype=np.float32) # for image and mask mixup
         for v in range(SuperP_map_b_value.shape[0]):
             bool_v = (SuperP_map_b == SuperP_map_b_value[v])
-            # binary_mask_sp_mixup[bool_v == True] = 1  # mix处mask是1, 否则是0
             lam = np.random.beta(Beta_mixup, Beta_mixup)
             lam_mixup_mask_sp[bool_v == True] = lam
 
@@ -167,7 +158,7 @@ def SuperpixelMixup_LambdaMask(images, labels, N_superpixels_mim, N_superpixels_
         for v in range(SuperP_map_b_value.shape[0]):
             if v in sel_region_idx_cutmix:
                 bool_v = (SuperP_map_b == SuperP_map_b_value[v])
-                binary_mask_sp_cutmix[bool_v == True] = 1  # mix处mask是1, 否则是0
+                binary_mask_sp_cutmix[bool_v == True] = 1  
             else:
                 pass
         labels_sp_cutmix = lb_a[sp] * (1 - binary_mask_sp_cutmix) + lb_b[sp] * binary_mask_sp_cutmix
@@ -332,7 +323,7 @@ def main():
                 images = samples['image']
                 labels = samples['label']
 
-                r = np.random.rand(1)  # 从0-1正太分布数据中返回一个数
+                r = np.random.rand(1) 
                 if r < opts.cutmix_prob:
                     # rand_index = torch.randperm(images.shape[0]).cuda()
                     # img_a, img_b = images, images[rand_index]
